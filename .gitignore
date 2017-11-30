@@ -1,11 +1,2 @@
-*/target
-build
-*/build
-*/libs/*
-.gradle
-gradle
-gradlew.bat
-gradlew
-.idea
-*.iml
-*/*.iml
+node_modules
+public
