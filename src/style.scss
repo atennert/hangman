@@ -1,0 +1,159 @@
+$color: #fff;
+$background-color: #244;
+$button-hover-color: #366;
+
+html,
+body {
+  height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  background-color: $background-color;
+  color: $color;
+}
+
+.game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+}
+
+.game__content {
+  height: 100%;
+  flex-shrink: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.game__infobar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 30vw;
+  height: 100%;
+  padding: 10vh 3vw;
+}
+
+.game__title {
+  font-size: 4em;
+  margin-bottom: 2vh;
+}
+
+.game__fail-count {
+  display: inline;
+  margin-right: 1vw;
+  // margin-bottom: 1vh;
+  font-size: 2em;
+}
+
+.game__output {
+  width: 70vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game__hangman {
+  height: 50vmin;
+  width: 50vmin;
+  border: .3vmin solid $color;
+  margin-bottom: 10%;
+
+  & > * {
+    stroke: $color;
+    stroke-width: 4px;
+    fill: none;
+    }
+}
+
+.game__word {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70vmin;
+  min-height: 8vmin;
+  padding: 10px;
+  font-size: 3.5vmin;
+  font-family: monospace;
+  border: .3vmin solid $color;
+}
+
+.keyboard-box {
+  height: 4vh;
+  width: 80vw;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  transition-duration: .3s;
+}
+
+.keyboard-box__button {
+  right: 0;
+  height: 4vh;
+  width: 7vh;
+  border: solid .3vmin $color;
+  border-bottom: 0;
+  border-top-left-radius: 1vmin;
+  border-top-right-radius: 1vmin;
+  transition: background-color .3s;
+
+  &::before {
+    content: '⌨';
+    font-size: 2em;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+}
+
+.keyboard-box__content {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: .5vmin;
+  padding: .5vmin;
+  height: 20vh;
+  width: 80vw;
+  border: solid .3vmin $color;
+}
+
+.keyboard-box__key,
+.game__reset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 5px;
+  border: solid .3vmin $color;
+  font-weight: bold;
+  font-size: 1.5em;
+  border-radius: 1vmin;
+}
+
+
+.keyboard-box__button:hover,
+.keyboard-box__key:hover,
+.game__reset:hover {
+  background-color: $button-hover-color;
+}

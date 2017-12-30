@@ -1,0 +1,5 @@
+{
+  "plugins": {
+    "autoprefixer": {"browsers": [">= 5%"]}
+  }
+}
