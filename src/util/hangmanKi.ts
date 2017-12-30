@@ -58,7 +58,7 @@ class Hangman {
           }
         }
 
-        this._displayed = tmpDisplayed.join();
+        this._displayed = tmpDisplayed.join('');
         this._notifyWord();
       } else {
         this._fails++;
