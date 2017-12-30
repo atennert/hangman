@@ -17,14 +17,18 @@ class HangmanGame {
     ((document.querySelector(`.${gameRoot}`)!)
       .querySelector('.keyboard-box__button')!)
       .addEventListener('click', toggleShowKeyBoard);
+
+    toggleShowKeyBoard();
   }
 }
 
-function toggleShowKeyBoard(event: any): void {
-  const keyboardContainer = event.target.parentNode;
-  if (keyboardContainer.style.height) {
-    keyboardContainer.removeAttribute('style');
-  } else {
-    keyboardContainer.style.height = '24vh';
-  }
+function toggleShowKeyBoard(): void {
+  const keyboardContainer: any = document.querySelector('.keyboard-box')!;
+  requestAnimationFrame(() => {
+    if (keyboardContainer.style.height) {
+      keyboardContainer.removeAttribute('style');
+    } else {
+      keyboardContainer.style.height = '24vh';
+    }
+  });
 }
