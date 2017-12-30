@@ -54,7 +54,7 @@ body {
 }
 
 .game__title {
-  font-size: 4em;
+  font-size: 3.5em;
   margin-bottom: 2vh;
 }
 
@@ -156,4 +156,27 @@ body {
 .keyboard-box__key:hover,
 .game__reset:hover {
   background-color: $button-hover-color;
+}
+
+@media screen and (orientation: portrait) {
+  .game__content {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .game__infobar {
+    flex-shrink: 1;
+    height: 15vh;
+    padding: 0;
+    width: 100%;
+  }
+
+  .game__output {
+    height: 45vh;
+  }
+
+  .keyboard-box,
+  .keyboard-box__content {
+    width: 95vw;
+  }
 }
