@@ -17,7 +17,7 @@ function pickWord(): Promise<any> {
       console.log(error.message);
       reject();
     });
-    xhr.open('GET', 'http://www.krautipsum.de/api/noun');
+    xhr.open('GET', 'https://www.krautipsum.de/api/noun');
     xhr.send();
   });
 }
