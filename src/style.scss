@@ -141,6 +141,7 @@ body {
   grid-template-columns: repeat(9, 1fr);
   grid-gap: .5vmin;
   padding: .5vmin;
+  height: 4vh;
   width: 80vw;
   border: solid .3vmin $color;
 }

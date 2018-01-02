@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hangman-atennert-v0',
+const CACHE_NAME = 'hangman-atennert-v1',
   ALL_CACHES: any = [ // need any here for includes
     CACHE_NAME
   ];
@@ -10,7 +10,8 @@ self.addEventListener('install', (event: any) => {
         return cache.addAll([
           'index.html',
           'index.js',
-          'style.css'
+          'style.css',
+          'icon.png'
         ]);
       })
   );
