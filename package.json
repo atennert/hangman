@@ -1,6 +1,6 @@
 {
   "name": "hangman",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple JS hangman implementation",
   "main": "./src/index.html",
   "scripts": {
@@ -11,7 +11,7 @@
     "prebuild": "rm -rf ./public/$npm_package_version && mkdir -p ./public/$npm_package_version",
     "postbuild": "rm -rf ./tmp",
     "build": "npm-run-all --parallel build:**",
-    "build:ts": "tsc --outDir ./tmp/ && uglifyjs ./tmp/util/*.js ./tmp/index.js > ./public/$npm_package_version/index.js",
+    "build:ts": "tsc --outDir ./tmp/ && uglifyjs ./tmp/util/*.js ./tmp/index.js > ./public/$npm_package_version/index.js && cp ./tmp/sw/sw.js ./public/$npm_package_version/",
     "build:css": "sassc src/style.scss | postcss -c .postcssrc.json | cssmin > ./public/$npm_package_version/style.css",
     "build:html": "cp ./src/*.html ./public/$npm_package_version/"
   },

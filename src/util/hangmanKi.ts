@@ -12,7 +12,7 @@ class Hangman {
   private _displayed: string;
 
   init(): void {
-    pickWord().then(this._setWord.bind(this));
+    pickWord2().then(this._setWord.bind(this));
   }
 
   set failsListener(listener: any) {

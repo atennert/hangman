@@ -22,6 +22,7 @@ body {
 
 body {
   font-size: 16px;
+  font-family: sans-serif;
   background-color: $background-color;
   color: $color;
 }
@@ -78,7 +79,7 @@ body {
   height: 50vmin;
   width: 50vmin;
   border: .3vmin solid $color;
-  margin-bottom: 10%;
+  margin-bottom: 8vh;
 
   & > * {
     stroke: $color;
@@ -100,19 +101,23 @@ body {
 }
 
 .keyboard-box {
+  display: flex;
+  flex-direction: column;
   height: 4vh;
   width: 80vw;
   flex-shrink: 0;
+  flex-grow: 1;
   overflow: hidden;
   transition-property: height;
   transition-timing-function: ease-in-out;
   transition-duration: .3s;
+  min-height: calc(4 * 2.6em);
 }
 
 .keyboard-box__button {
   right: 0;
-  height: 4vh;
-  width: 7vh;
+  width: 4em;
+  flex-shrink: 0;
   border: solid .3vmin $color;
   border-bottom: 0;
   border-top-left-radius: 1vmin;
@@ -131,10 +136,11 @@ body {
 
 .keyboard-box__content {
   display: grid;
+  flex-grow: 1;
+  flex-shrink: 1;
   grid-template-columns: repeat(9, 1fr);
   grid-gap: .5vmin;
   padding: .5vmin;
-  height: 20vh;
   width: 80vw;
   border: solid .3vmin $color;
 }
@@ -147,7 +153,7 @@ body {
   padding: 2px 5px;
   border: solid .3vmin $color;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.6em;
   border-radius: 1vmin;
 }
 
@@ -178,5 +184,11 @@ body {
   .keyboard-box,
   .keyboard-box__content {
     width: 95vw;
+  }
+}
+
+@media screen and (max-height: 480px) and (orientation: landscape){
+  .game__hangman {
+    margin-bottom: 2vh;
   }
 }
