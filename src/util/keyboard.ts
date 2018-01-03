@@ -3,46 +3,39 @@
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
 class Keyboard {
-  private _container: any;
-  private _keys: any[];
+  private keyboardBox: any;
+  private keys: any[];
 
   private _listenerCallback: any;
 
   constructor(gameRoot: string) {
     const fragment = document.createDocumentFragment(),
       gameContainer = document.querySelector(`.${gameRoot}`)!,
-      keyboardBox = document.createElement('div'),
       keyboardOpener = document.createElement('div'),
       keyListener = this._handleKeyEvent.bind(this);
     let key;
 
-    keyboardBox.className = 'keyboard-box';
-    keyboardOpener.className = 'keyboard-box__button';
+    this.keyboardBox = document.createElement('div'),
+    this.keyboardBox.className = 'keyboard-box';
 
-    this._container = document.createElement('div');
-    this._container.className = 'keyboard-box__content';
-
-    keyboardBox.appendChild(keyboardOpener);
-    keyboardBox.appendChild(this._container);
-
-    this._keys = [...ALPHABET].map(letter => {
+    this.keys = [...ALPHABET].map(letter => {
       key = document.createElement('p');
       key.textContent = letter;
       key.className = 'keyboard-box__key';
       key.dataset.key = letter;
       key.addEventListener('click', keyListener);
-      this._container.appendChild(key);
+      this.keyboardBox.appendChild(key);
       return key;
     });
 
-    fragment.appendChild(keyboardBox);
+    fragment.appendChild(this.keyboardBox);
     gameContainer.appendChild(fragment);
 
     window.addEventListener('keyup', this._handleWindowKeyEvent.bind(this));
   }
 
   reset(): void {
-    Array.prototype.forEach.call(this._container.childNodes, (node: any) => {
+    Array.prototype.forEach.call(this.keyboardBox.childNodes, (node: any) => {
       node.removeAttribute('style');
     })
   }
@@ -61,7 +54,7 @@ class Keyboard {
     const keyCode = event.keyCode ? event.keyCode : event.which;
 
     if (keyCode > 64 && keyCode < 91) { // a-z
-      const key = this._keys[keyCode - 65];
+      const key = this.keys[keyCode - 65];
       key.style.pointerEvents = 'none';
       key.style.backgroundColor = '#488';
       this._listenerCallback(key.dataset.key);

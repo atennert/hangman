@@ -13,22 +13,5 @@ class HangmanGame {
     hangman.failsListener = ui.updateFails.bind(ui);
 
     keyboard.setKeyListener(hangman.getLetterCallback());
-
-    ((document.querySelector(`.${gameRoot}`)!)
-      .querySelector('.keyboard-box__button')!)
-      .addEventListener('click', toggleShowKeyBoard);
-
-    toggleShowKeyBoard();
   }
-}
-
-function toggleShowKeyBoard(): void {
-  const keyboardContainer: any = document.querySelector('.keyboard-box')!;
-  requestAnimationFrame(() => {
-    if (keyboardContainer.style.height) {
-      keyboardContainer.removeAttribute('style');
-    } else {
-      keyboardContainer.style.height = '24vh';
-    }
-  });
 }
