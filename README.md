@@ -2,6 +2,8 @@
 
 This is a simple website hangman implementation in TypeScript.
 
+Play it here: [Hangman game website](https://hangman.andreas-tennert.de).
+
 ## Features
 * Offline capable web app
 * Start a new run with the start/reset button
