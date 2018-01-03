@@ -1,6 +1,6 @@
 {
   "name": "hangman",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple JS hangman implementation",
   "main": "./src/index.html",
   "scripts": {
@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/atennert/hangman/issues"
   },
-  "homepage": "https://github.com/atennert/hangman#readme",
+  "homepage": "https://hangman.andreas-tennert.de",
   "devDependencies": {
     "@types/node": "^8.0.53",
     "autoprefixer": "^7.1.6",

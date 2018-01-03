@@ -37,7 +37,7 @@ body {
 }
 
 .game__content {
-  height: 100%;
+  height: 75%;
   flex-shrink: 1;
   display: flex;
   justify-content: flex-start;
@@ -62,7 +62,6 @@ body {
 .game__fail-count {
   display: inline;
   margin-right: 1vw;
-  // margin-bottom: 1vh;
   font-size: 2em;
 }
 
@@ -101,49 +100,14 @@ body {
 }
 
 .keyboard-box {
-  display: flex;
-  flex-direction: column;
-  height: 4vh;
-  width: 80vw;
-  flex-shrink: 0;
-  flex-grow: 1;
-  overflow: hidden;
-  transition-property: height;
-  transition-timing-function: ease-in-out;
-  transition-duration: .3s;
-  min-height: calc(4 * 2.6em);
-}
-
-.keyboard-box__button {
-  right: 0;
-  width: 4em;
-  flex-shrink: 0;
-  border: solid .3vmin $color;
-  border-bottom: 0;
-  border-top-left-radius: 1vmin;
-  border-top-right-radius: 1vmin;
-  transition: background-color .3s;
-
-  &::before {
-    content: '⌨';
-    font-size: 2em;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
-}
-
-.keyboard-box__content {
   display: grid;
-  flex-grow: 1;
-  flex-shrink: 1;
   grid-template-columns: repeat(9, 1fr);
   grid-gap: .5vmin;
   padding: .5vmin;
-  height: 4vh;
   width: 80vw;
   border: solid .3vmin $color;
+  flex-shrink: 0;
+  flex-grow: 1;
 }
 
 .keyboard-box__key,
@@ -156,13 +120,10 @@ body {
   font-weight: bold;
   font-size: 1.6em;
   border-radius: 1vmin;
-}
 
-
-.keyboard-box__button:hover,
-.keyboard-box__key:hover,
-.game__reset:hover {
-  background-color: $button-hover-color;
+  &:hover {
+    background-color: $button-hover-color;
+  }
 }
 
 @media screen and (orientation: portrait) {
@@ -182,8 +143,7 @@ body {
     height: 45vh;
   }
 
-  .keyboard-box,
-  .keyboard-box__content {
+  .keyboard-box {
     width: 95vw;
   }
 }
