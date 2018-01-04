@@ -13,4 +13,12 @@ Play it here: [Hangman game website](https://hangman.andreas-tennert.de).
 * Landscape and portrait mode
 
 ## Sources
-The code in the `src` directory. The `sw` directory contains the service worker. The `util` directory contains the Hangman game implementation, which is used by index.ts.
+The code is in the `src` directory. The `src/sw` directory contains the service worker. The `src/util` directory contains the Hangman game implementation, which is used by index.ts.
+
+## Prerequisites
+* The npm scripts in package.json are currently focussing on `Linux`. MacOS might work to.
+* `sassc` needs to be installed to compile the scss files.
+* `ImageMagic` is needed to convert the icon.svg to icon.png (using convert).
+* `Node` is required to do everything.
+
+The other dependencies are listed in package.json and can be installed with `npm i`.
