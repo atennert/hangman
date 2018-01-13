@@ -1,5 +1,7 @@
 'use strict';
 
+import HangmanGame from './util/hangman';
+
 function registerServiceWorker(): void {
   if (!navigator.serviceWorker) {
     return;

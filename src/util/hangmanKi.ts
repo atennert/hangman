@@ -1,8 +1,9 @@
 'use strict';
+import pickWord2 from './random-word-engine';
 
 const MAX_FAILS = 10;
 
-class Hangman {
+export default class Hangman {
   private _failsCallback: any;
   private _wordCallback: any;
 
@@ -10,6 +11,8 @@ class Hangman {
   private _usedLetters: string[];
   private _currentWord: string;
   private _displayed: string;
+
+  constructor() {}
 
   init(): void {
     pickWord2().then(this._setWord.bind(this));

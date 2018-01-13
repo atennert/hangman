@@ -2,7 +2,7 @@
 
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
-class Keyboard {
+export default class Keyboard {
   private keyboardBox: any;
   private keys: any[];
 
