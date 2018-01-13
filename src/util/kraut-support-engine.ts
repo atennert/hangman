@@ -5,7 +5,7 @@ const transformer: any = { ä: 'ae', ö: 'oe', ü: 'ue', ß: 'ss' };
 const _fixUmlauts = (word: string) =>
   [...word].map(letter => transformer[letter] ? transformer[letter] : letter).join('');
 
-function pickWord(): Promise<any> {
+export default function pickWord(): Promise<any> {
   return new Promise((resolve: any, reject: any) => {
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {

@@ -1,6 +1,9 @@
 'use strict';
+import Hangman from './hangmanKi';
+import UI from './ui';
+import Keyboard from './keyboard'
 
-class HangmanGame {
+export default class HangmanGame {
   constructor(gameRoot: string) {
     const hangman = new Hangman(),
       ui = new UI(gameRoot),

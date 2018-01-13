@@ -1,6 +1,6 @@
 'use strict';
 
-class UI {
+export default class UI {
   private _gameRoot: any;
   private _container: any;
 
