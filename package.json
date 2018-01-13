@@ -11,7 +11,7 @@
     "prebuild": "rm -rf ./public/$npm_package_version && mkdir -p ./public/$npm_package_version",
     "postbuild": "rm -rf ./tmp",
     "build": "npm-run-all --parallel build:**",
-    "build:ts": "webpack && uglifyjs ./tmp/app.js > ./public/$npm_package_version/index.js && uglifyjs ./tmp/sw.js > ./public/$npm_package_version/sw.js",
+    "build:ts": "webpack && uglifyjs ./tmp/app.js --compress --mangle > ./public/$npm_package_version/index.js && uglifyjs ./tmp/sw.js --compress --mangle > ./public/$npm_package_version/sw.js",
     "build:css": "sassc src/style.scss | postcss -c .postcssrc.json | cssmin > ./public/$npm_package_version/style.css",
     "build:html": "cp ./src/*.html ./public/$npm_package_version/",
     "build:manifest": "cp ./src/manifest.json ./public/$npm_package_version/",

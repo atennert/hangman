@@ -30,28 +30,16 @@ body {
 .game {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  align-items: center;
-}
-
-.game__content {
-  height: 75%;
-  flex-shrink: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  padding: 2vmin 2vmin 0;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas: 'infobar content' 'keyboard keyboard';
+  grid-gap: 1vmin;
 }
 
 .game__infobar {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 30vw;
-  height: 100%;
-  padding: 10vh 3vw;
+  grid-area: infobar;
 }
 
 .game__title {
@@ -60,14 +48,12 @@ body {
 }
 
 .game__fail-count {
-  display: inline;
   margin-right: 1vw;
   font-size: 2em;
 }
 
 .game__output {
-  width: 70vw;
-  height: 100%;
+  grid-area: content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -84,7 +70,7 @@ body {
     stroke: $color;
     stroke-width: 4px;
     fill: none;
-    }
+  }
 }
 
 .game__word {
@@ -100,19 +86,20 @@ body {
 }
 
 .keyboard-box {
+  grid-area: keyboard;
+  height: 100%;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-gap: .5vmin;
   padding: .5vmin;
-  width: 80vw;
+  width: 85vw;
   border: solid .3vmin $color;
-  flex-shrink: 0;
-  flex-grow: 1;
 }
 
 .keyboard-box__key,
 .game__reset {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 2px 5px;
@@ -127,29 +114,27 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-  .game__content {
-    flex-direction: column;
-    justify-content: space-around;
+  .game {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas: 'infobar' 'content' 'keyboard';
   }
 
   .game__infobar {
     flex-shrink: 1;
-    height: 15vh;
-    padding: 0;
-    width: 100%;
+    text-align: center;
   }
 
-  .game__output {
-    height: 45vh;
+  .game__title {
+    font-size: 6.5vh;
+  }
+
+  .game__fail-count,
+  .game__reset {
+    font-size: 2.5vh;
   }
 
   .keyboard-box {
     width: 95vw;
-  }
-}
-
-@media screen and (max-height: 480px) and (orientation: landscape){
-  .game__hangman {
-    margin-bottom: 2vh;
   }
 }

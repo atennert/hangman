@@ -13,6 +13,15 @@ This is a simple website hangman implementation in TypeScript.
 
 Play it here: [Hangman game website](https://hangman.andreas-tennert.de).
 
+## Status
+__master__:<br>
+[![Build Status](https://travis-ci.org/atennert/hangman.svg?branch=master)](https://travis-ci.org/atennert/hangman)
+[![Release](https://img.shields.io/github/release/atennert/hangman.svg)](https://github.com/atennert/hangman/releases)
+[![License](https://img.shields.io/github/license/atennert/hangman.svg)](https://opensource.org/licenses/MIT)
+
+__devel__:<br>
+[![Build Status](https://travis-ci.org/atennert/hangman.svg?branch=devel)](https://travis-ci.org/atennert/hangman)
+
 ## Features
 * Offline capable web app
 * Start a new run with the start/reset button

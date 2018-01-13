@@ -6,7 +6,6 @@ export default class UI {
 
   constructor(gameRoot: string) {
     const fragment = document.createDocumentFragment(),
-      gameContent = document.createElement('div'),
       gameInfoBar = document.createElement('div'),
       gameTitle = document.createElement('div'),
       gameFailCount = document.createElement('p'),
@@ -15,7 +14,6 @@ export default class UI {
     this._container = document.createElement('div');
 
     this._container.className = 'game__output';
-    gameContent.className = 'game__content';
     gameInfoBar.className = 'game__infobar';
     gameTitle.className = 'game__title';
     gameTitle.textContent = 'Hangman';
@@ -29,10 +27,9 @@ export default class UI {
     gameInfoBar.appendChild(gameFailCount);
     gameInfoBar.appendChild(gameResetButton);
 
-    gameContent.appendChild(gameInfoBar);
-    gameContent.appendChild(this._container);
+    fragment.appendChild(gameInfoBar);
+    fragment.appendChild(this._container);
 
-    fragment.appendChild(gameContent);
     this._gameRoot.appendChild(fragment);
 
     this._container.innerHTML =
