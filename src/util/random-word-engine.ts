@@ -1,5 +1,7 @@
 'use strict';
 
+import IWordProvider from './word-provider';
+
 const _WORDS = ['lol',
   'dudelsack',
   'haus',
@@ -12,7 +14,8 @@ const _WORDS = ['lol',
   'birne'];
 
 
-export default function pickWord2(): Promise<any> {
-  return Promise.resolve(_WORDS[Math.max(0, Math.ceil(Math.random() * _WORDS.length) - 1)]);
+export default class RandomWordEngine implements IWordProvider {
+  getWord(): Promise<string> {
+    return Promise.resolve(_WORDS[Math.max(0, Math.ceil(Math.random() * _WORDS.length) - 1)]);
+  }
 }
-
