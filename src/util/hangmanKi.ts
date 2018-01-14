@@ -1,21 +1,22 @@
 'use strict';
-import pickWord2 from './random-word-engine';
+import IWordProvider from './word-provider';
 
 const MAX_FAILS = 10;
 
 export default class Hangman {
   private _failsCallback: any;
   private _wordCallback: any;
+  private _wordProvider: IWordProvider;
 
   private _fails: number;
   private _usedLetters: string[];
   private _currentWord: string;
   private _displayed: string;
 
-  constructor() {}
-
   init(): void {
-    pickWord2().then(this._setWord.bind(this));
+    this._wordProvider.getWord()
+      .then(this._setWord.bind(this))
+      .catch((error) => console.error('Hangman.init: no word provided', error));
   }
 
   set failsListener(listener: any) {
@@ -24,6 +25,10 @@ export default class Hangman {
 
   set wordListener(listener: any) {
     this._wordCallback = listener;
+  }
+
+  set wordProvider(wordProvider: IWordProvider) {
+    this._wordProvider = wordProvider;
   }
 
   _setWord(word: string): void {
