@@ -22,7 +22,7 @@ __devel__:<br>
 * Landscape and portrait mode
 
 ## Sources
-The code is in the `src` directory. The `src/sw` directory contains the service worker. The `src/util` directory contains the Hangman game implementation, which is used by index.ts.
+The code is in the `src` directory. The `src/sw` directory contains the service worker. The `src/util` directory contains the Hangman game implementation, which is used by index.ts. The `test` directory contains test cases.
 
 ## Prerequisites
 * The npm scripts in package.json are currently focussing on `Linux`. MacOS might work to.
@@ -31,3 +31,8 @@ The code is in the `src` directory. The `src/sw` directory contains the service 
 * `Node` is required to do everything.
 
 The other dependencies are listed in package.json and can be installed with `npm i`.
+
+## Commands
+* Use `npm run test` to test.
+* Use `npm run lint` to check the linting of scss an ts sources.
+* Use `npm run build` to build.
