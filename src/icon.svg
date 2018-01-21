@@ -8,7 +8,7 @@
       }
       .hangman__part {
         stroke: #fff;
-        stroke-width: 6px;
+        stroke-width: 8px;
         fill: none;
       }
     ]]></style>
