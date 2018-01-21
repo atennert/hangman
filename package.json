@@ -1,10 +1,10 @@
 {
   "name": "hangman",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A simple JS hangman implementation",
   "main": "./src/index.html",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/mocha-webpack/bin/mocha-webpack --webpack-config ./webpack.test.config.js --require test/setup.js test/*.spec.js",
+    "test": "mocha -r ts-node/register test/*.spec.ts",
     "lint": "npm-run-all lint:**",
     "lint:ts": "tslint ./src/**/*.ts",
     "lint:css": "sass-lint -v -q --max-warnings 0",
@@ -15,7 +15,7 @@
     "build:css": "sassc src/style.scss | postcss -c .postcssrc.json | cssmin > ./public/$npm_package_version/style.css",
     "build:html": "cp ./src/*.html ./public/$npm_package_version/",
     "build:manifest": "cp ./src/manifest.json ./public/$npm_package_version/",
-    "build:icon": "convert -resize 144x144 -background none ./src/icon.svg ./public/$npm_package_version/icon.png"
+    "build:icon": "convert -resize 192x192 -background none ./src/icon.svg ./public/$npm_package_version/icon.png"
   },
   "repository": {
     "type": "git",
@@ -32,16 +32,18 @@
   },
   "homepage": "https://hangman.andreas-tennert.de",
   "devDependencies": {
+    "@types/chai": "^4.1.1",
+    "@types/mocha": "^2.2.46",
     "@types/node": "^8.0.53",
     "autoprefixer": "^7.1.6",
     "chai": "^4.1.2",
     "cssmin": "^0.4.3",
     "mocha": "^4.0.1",
-    "mocha-webpack": "^1.0.1",
     "npm-run-all": "^4.1.2",
     "postcss-cli": "^4.1.1",
     "sass-lint": "^1.12.1",
     "ts-loader": "^3.2.0",
+    "ts-mockito": "^2.2.7",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2",

@@ -18,10 +18,10 @@ export default class UI {
     gameTitle.className = 'game__title';
     gameTitle.textContent = 'Hangman';
     gameFailCount.className = 'game__fail-count';
-    gameFailCount.textContent = 'Fails:';
+    gameFailCount.textContent = 'Fehler:';
     gameResetButton.className = 'game__reset';
     gameResetButton.setAttribute('type', 'button');
-    gameResetButton.textContent = 'Start / Reset';
+    gameResetButton.textContent = 'Neustarten';
 
     gameInfoBar.appendChild(gameTitle);
     gameInfoBar.appendChild(gameFailCount);
@@ -34,26 +34,28 @@ export default class UI {
 
     this._container.innerHTML =
 `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" version="1.1" class="game__hangman">
-      <line class="hangman__part hangman__part--1" x1="50" x2="50" y1="350" y2="50"/>
-      <line class="hangman__part hangman__part--2" x1="50" x2="300" y1="50" y2="50"/>
-      <line class="hangman__part hangman__part--3" x1="50" x2="150" y1="150" y2="50"/>
-      <line class="hangman__part hangman__part--4" x1="300" x2="300" y1="50" y2="100"/>
-      <circle class="hangman__part hangman__part--5" cx="300" cy="125" r="25"/>
-      <line class="hangman__part hangman__part--6" x1="300" x2="300" y1="150" y2="220"/>
-      <line class="hangman__part hangman__part--7" x1="300" x2="255" y1="155" y2="170"/>
-      <line class="hangman__part hangman__part--8" x1="300" x2="345" y1="155" y2="170"/>
-      <line class="hangman__part hangman__part--9" x1="300" x2="280" y1="220" y2="300"/>
-      <line class="hangman__part hangman__part--10" x1="300" x2="320" y1="220" y2="300"/>
-      </svg>
-      <p class="game__word"></p>`;
-
-    this.addResetListener(this._init.bind(this));
+<line class="hangman__part hangman__part--1" x1="50" x2="50" y1="350" y2="50"/>
+<line class="hangman__part hangman__part--2" x1="50" x2="300" y1="50" y2="50"/>
+<line class="hangman__part hangman__part--3" x1="50" x2="150" y1="150" y2="50"/>
+<line class="hangman__part hangman__part--4" x1="300" x2="300" y1="50" y2="100"/>
+<circle class="hangman__part hangman__part--5" cx="300" cy="125" r="25"/>
+<line class="hangman__part hangman__part--6" x1="300" x2="300" y1="150" y2="220"/>
+<line class="hangman__part hangman__part--7" x1="300" x2="255" y1="155" y2="170"/>
+<line class="hangman__part hangman__part--8" x1="300" x2="345" y1="155" y2="170"/>
+<line class="hangman__part hangman__part--9" x1="300" x2="280" y1="220" y2="300"/>
+<line class="hangman__part hangman__part--10" x1="300" x2="320" y1="220" y2="300"/>
+</svg>
+<p class="game__word"></p>`;
   }
 
-  _init(): void {
+  private resetGraphic(): void {
     Array.prototype.forEach.call(this._container.querySelectorAll('.hangman__part'), (element: any) => {
       element.style.visibility = 'hidden';
     });
+  }
+
+  getGraphic(): string {
+    return document.querySelector('.game__hangman')!.outerHTML;
   }
 
   addResetListener(callback: any): void {
@@ -66,7 +68,10 @@ export default class UI {
   }
 
   updateFails(fails: number, maxFails: number): void {
-    this._gameRoot.querySelector('.game__fail-count').textContent = `Fails: ${fails}/${maxFails}`;
+    if (fails === 0) {
+      this.resetGraphic();
+    }
+    this._gameRoot.querySelector('.game__fail-count').textContent = `Fehler: ${fails}/${maxFails}`;
     if (fails) {
       this._container.querySelector(`.hangman__part--${fails}`).removeAttribute('style');
     }

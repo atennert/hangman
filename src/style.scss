@@ -1,6 +1,7 @@
 $color: #fff;
 $background-color: #244;
 $button-hover-color: #366;
+$background-color-opaque: rgba(17, 34, 34, .7);
 
 html,
 body {
@@ -64,9 +65,8 @@ body {
   height: 50vmin;
   width: 50vmin;
   border: .3vmin solid $color;
-  margin-bottom: 8vh;
 
-  & > * {
+  & .hangman__part {
     stroke: $color;
     stroke-width: 4px;
     fill: none;
@@ -74,6 +74,7 @@ body {
 }
 
 .game__word {
+  margin-top: 8vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,19 +99,75 @@ body {
 }
 
 .keyboard-box__key,
+.game__message-button,
 .game__reset {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 2px 5px;
   border: solid .3vmin $color;
+  background-color: $background-color;
+  color: $color;
   font-weight: bold;
-  font-size: 1.6em;
   border-radius: 1vmin;
 
   &:hover {
     background-color: $button-hover-color;
   }
+}
+
+.keyboard-box__key,
+.game__reset {
+  font-size: 1.6em;
+}
+
+.game__message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: $background-color-opaque;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+  transition: opacity .2s;
+
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .game__hangman {
+    height: 30vmin;
+    width: 30vmin;
+    margin-top: 2vmin;
+    border: 1px solid $color;
+  }
+}
+
+.game__message-content {
+  background-color: $background-color;
+  border: solid .3vmin $color;
+  border-radius: 1vmin;
+  padding: 12px;
+  font-size: 1.6em;
+  text-align: center;
+}
+
+.game__message-content--big {
+  font-size: 1.6em;
+}
+
+.game__message-content--bigger {
+  font-size: 2.2em;
+}
+
+.game__message-button {
+  margin-top: 2vmin;
+  font-size: 1em;
 }
 
 @media screen and (orientation: portrait) {
@@ -137,4 +194,15 @@ body {
   .keyboard-box {
     width: 95vw;
   }
-}
+
+  .game__message {
+    font-size: 1.3em;
+
+    .game__hangman {
+      height: 45vmin;
+      width: 45vmin;
+      margin-top: 1vmin;
+      border: 1px solid $color;
+    }
+  }
+  }

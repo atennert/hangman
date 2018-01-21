@@ -1,6 +1,6 @@
 'use strict';
 
-import HangmanGame from './util/hangman';
+import HangmanGame from './game/hangman';
 
 function registerServiceWorker(): void {
   if (!navigator.serviceWorker) {
