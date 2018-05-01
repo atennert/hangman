@@ -61,14 +61,14 @@ export default class Hangman {
       && this.usedLetters.indexOf(letter) === -1) {
 
       this.usedLetters.push(letter);
-      if (this.currentWord.indexOf(letter) !== -1) {
+      if (this.currentWord.toLowerCase().indexOf(letter) !== -1) {
         let i: number,
           currentChar: string;
         const tmpDisplayed = [...this.displayed];
 
         for (i = 0; i < this.currentWord.length; i++) {
           currentChar = this.currentWord.charAt(i);
-          if (currentChar === letter) {
+          if (currentChar.toLowerCase() === letter) {
             tmpDisplayed[i] = currentChar;
           }
         }
@@ -80,8 +80,7 @@ export default class Hangman {
         this.fails++;
         this.notifyFails();
       }
-      if (!this.displayed.includes('_') ||
-        this.fails === MAX_FAILS) {
+      if (!this.displayed.includes('_') || this.fails === MAX_FAILS) {
         this.gameOverListener(this.currentWord, this.wrongLetters, MAX_FAILS);
       }
     }

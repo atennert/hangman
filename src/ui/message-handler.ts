@@ -1,5 +1,5 @@
 'use strict';
-import { Messages, MSG_WELCOME, StatusMessage } from './messages';
+import { Messages, StatusMessage } from './messages';
 
 export default class MessageHandler {
   private messages: Messages;
@@ -12,14 +12,10 @@ export default class MessageHandler {
     const letters = fails.join(',');
     const newMessage = fails.length === maxFails
       ? new StatusMessage(
-`<span class="game__message-content--big">Du hast verloren.</span><br>Gesuchtes Wort: ${word}<br>Falsche Buchstaben: ${!letters ? '-' : letters}`, true)
+`<span class="game__message-content--big">You lost</span><br>Looked for word: ${word}<br>Wrong letters: ${!letters ? '-' : letters}`, true)
       : new StatusMessage(
-`<span class="game__message-content--big">Du hast gewonnen.</span><br>Gesuchtes Wort: ${word}<br>Falsche Buchstaben: ${letters}`, fails.length > 0);
+`<span class="game__message-content--big">You won</span><br>Looked for word: ${word}<br>Wrong letters: ${letters}`, fails.length > 0);
 
     this.messages.showMessage(newMessage);
-  }
-
-  showStartMessage() {
-    this.messages.showMessage(MSG_WELCOME);
   }
 }

@@ -28,29 +28,127 @@ body {
   color: $color;
 }
 
+a {
+  color: $color;
+  text-decoration: none;
+}
+
+.hangman__image {
+  border: .3vmin solid $color;
+
+  & .hangman__part {
+    stroke: $color;
+    stroke-width: 4px;
+    fill: none;
+  }
+}
+
+// menu ==============================================
+
+.menu {
+  width: 100%;
+  height: 100%;
+  padding: 3vmin;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+  'menu-header menu-header'
+  'menu-description menu-description'
+  'menu-image menu-menu';
+  grid-gap: 1vmin;
+  justify-items: center;
+  align-items: center;
+
+  & .hangman__image {
+    max-width: 100%;
+    max-height: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+}
+
+.menu__header {
+  grid-area: menu-header;
+}
+
+.menu__description {
+  grid-area: menu-description;
+  font-size: 1.2em;
+}
+
+.image__container {
+  grid-area: menu-image;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu__container {
+  grid-area: menu-menu;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.menu__list {
+  list-style-type: none;
+}
+
+.menu__link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: .2em .3em;
+  border: solid .3vmin $color;
+  background-color: $background-color;
+  color: $color;
+  font-weight: 500;
+  border-radius: 1vmin;
+  font-size: 1.4em;
+
+  &:hover,
+  &:focus {
+    background-color: $button-hover-color;
+    text-decoration: underline;
+  }
+}
+
+// game ==============================================
+
 .game {
   width: 100%;
   height: 100%;
   padding: 2vmin 2vmin 0;
   display: grid;
   grid-template-columns: 1fr 4fr;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 2fr auto;
   grid-template-areas: 'infobar content' 'keyboard keyboard';
   grid-gap: 1vmin;
+
+  & .hangman__image {
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 
 .game__infobar {
   grid-area: infobar;
 }
 
-.game__title {
-  font-size: 3.5em;
+.game__title,
+.menu__title {
+  font-size: 3em;
   margin-bottom: 2vh;
+  font-weight: 400;
 }
 
 .game__fail-count {
   margin-right: 1vw;
-  font-size: 2em;
+  margin-bottom: 2vh;
+  font-size: 1.3em;
 }
 
 .game__output {
@@ -61,40 +159,28 @@ body {
   align-items: center;
 }
 
-.game__hangman {
-  height: 50vmin;
-  width: 50vmin;
-  border: .3vmin solid $color;
-
-  & .hangman__part {
-    stroke: $color;
-    stroke-width: 4px;
-    fill: none;
-  }
-}
-
 .game__word {
-  margin-top: 8vh;
+  margin-top: 2vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70vmin;
-  min-height: 8vmin;
-  padding: 10px;
-  font-size: 3.5vmin;
+  min-width: 70vmin;
+  padding: 1.2em;
+  font-size: 1em;
   font-family: monospace;
+  letter-spacing: .2em;
   border: .3vmin solid $color;
 }
 
 .keyboard-box {
   grid-area: keyboard;
   height: 100%;
+  width: 85vw;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   grid-gap: .5vmin;
   padding: .5vmin;
-  width: 85vw;
   border: solid .3vmin $color;
 }
 
@@ -108,7 +194,7 @@ body {
   border: solid .3vmin $color;
   background-color: $background-color;
   color: $color;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 1vmin;
 
   &:hover {
@@ -121,12 +207,16 @@ body {
   font-size: 1.6em;
 }
 
-.game__message {
+// messages ============================================
+
+#message {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: $background-color-opaque;
@@ -134,16 +224,17 @@ body {
   pointer-events: none;
   will-change: opacity;
   transition: opacity .2s;
+  font-size: 1.1em;
 
   &.show {
     opacity: 1;
     pointer-events: auto;
   }
 
-  .game__hangman {
-    height: 30vmin;
-    width: 30vmin;
-    margin-top: 2vmin;
+  .hangman__image {
+    height: 30vh;
+    width: 30vh;
+    margin-top: 2vh;
     border: 1px solid $color;
   }
 }
@@ -153,16 +244,16 @@ body {
   border: solid .3vmin $color;
   border-radius: 1vmin;
   padding: 12px;
-  font-size: 1.6em;
   text-align: center;
 }
 
 .game__message-content--big {
-  font-size: 1.6em;
+  font-size: 1.4em;
+  font-weight: 500;
 }
 
 .game__message-content--bigger {
-  font-size: 2.2em;
+  font-size: 1.6em;
 }
 
 .game__message-button {
@@ -171,6 +262,16 @@ body {
 }
 
 @media screen and (orientation: portrait) {
+  // menu ==============================================
+
+  .menu {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 2fr 1fr;
+    grid-template-areas: 'menu-header' 'menu-description' 'menu-image' 'menu-menu';
+  }
+  
+  // game ==============================================
+
   .game {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 2fr 1fr;
@@ -182,27 +283,18 @@ body {
     text-align: center;
   }
 
-  .game__title {
-    font-size: 6.5vh;
-  }
-
-  .game__fail-count,
-  .game__reset {
-    font-size: 2.5vh;
-  }
-
   .keyboard-box {
-    width: 95vw;
+    width: 100%;
   }
 
-  .game__message {
-    font-size: 1.3em;
+  // messages ============================================
 
-    .game__hangman {
-      height: 45vmin;
-      width: 45vmin;
-      margin-top: 1vmin;
+  #game__message {
+    .hangman__image {
+      height: 45vw;
+      width: 45vw;
+      margin-top: 1vw;
       border: 1px solid $color;
     }
   }
-  }
+}

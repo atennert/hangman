@@ -6,15 +6,9 @@ interface IMessage {
   showImage: boolean;
 }
 
-export const MSG_WELCOME: IMessage = {
-  messageText: 'Willkommen bei<br><span class="game__message-content--bigger">Hangman</span>',
-  buttonText: 'Starten',
-  showImage: true
-}
-
 export class StatusMessage implements IMessage {
   public readonly messageText: string;
-  public readonly buttonText = 'Nochmal versuchen';
+  public readonly buttonText = 'Try again';
   public readonly showImage: boolean;
 
   constructor(message: string, showImage: boolean) {
@@ -36,14 +30,13 @@ export class Messages {
 
   private graphicsProvider: () => string;
 
-  constructor(gameRoot: string) {
-    this.messageElem = document.createElement('div');
+  constructor(messageRoot: HTMLDivElement) {
+    this.messageElem = messageRoot;
     this.gameMessageContent = document.createElement('div');
     this.gameMessageButton = document.createElement('button');
     this.gameImageContainer = document.createElement('div');
     this.gameMessageText = document.createElement('p');
 
-    this.messageElem.classList.add('game__message');
     this.gameMessageContent.className = 'game__message-content';
     this.gameMessageButton.className = 'game__message-button';
     this.gameMessageButton.setAttribute('type', 'button');
@@ -52,8 +45,6 @@ export class Messages {
     this.gameMessageContent.appendChild(this.gameImageContainer);
     this.gameMessageContent.appendChild(this.gameMessageButton);
     this.messageElem.appendChild(this.gameMessageContent);
-
-    document.querySelector(`.${gameRoot}`)!.appendChild(this.messageElem);
 
     this.addGameStartListener(this.hideMessage.bind(this));
   }
