@@ -12,6 +12,7 @@ function registerServiceWorker(): void {
   });
 }
 
-new HangmanGame('game');
+// tslint:disable:no-unused-expression
+new HangmanGame('game', 'message');
 
 registerServiceWorker();

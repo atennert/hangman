@@ -1,6 +1,6 @@
 'use strict';
 
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+const ALPHABET = [...'abcdefghijklmnopqrstuvwxyzäöüß'];
 
 export default class Keyboard {
   private keyboardBox: any;
@@ -18,7 +18,7 @@ export default class Keyboard {
     this.keyboardBox = document.createElement('div'),
     this.keyboardBox.className = 'keyboard-box';
 
-    this.keys = [...ALPHABET].map(letter => {
+    this.keys = ALPHABET.map(letter => {
       key = document.createElement('p');
       key.textContent = letter;
       key.className = 'keyboard-box__key';
@@ -50,11 +50,10 @@ export default class Keyboard {
     this._listenerCallback(event.target.dataset.key);
   }
 
-  _handleWindowKeyEvent(event: any): void {
-    const keyCode = event.keyCode ? event.keyCode : event.which;
-
-    if (keyCode > 64 && keyCode < 91) { // a-z
-      const key = this.keys[keyCode - 65];
+  _handleWindowKeyEvent(event: KeyboardEvent): void {
+    const keyIndex = ALPHABET.indexOf(event.key);
+    if (keyIndex >= 0) {
+      const key = this.keys[keyIndex];
       key.style.pointerEvents = 'none';
       key.style.backgroundColor = '#488';
       this._listenerCallback(key.dataset.key);

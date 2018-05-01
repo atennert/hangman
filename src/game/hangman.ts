@@ -1,37 +1,55 @@
 'use strict';
 import Hangman from './hangman-ki';
-import UI from '../ui/ui';
+import Game from '../ui/game';
 import Keyboard from '../ui/keyboard'
 import RandomWordEngine from '../word-providing/random-word-engine';
 import { Messages } from '../ui/messages';
 import MessageHandler from '../ui/message-handler';
+import { Router, Routes } from '../ui/router';
+import Menu from '../ui/menu';
 
 export default class HangmanGame {
-  constructor(gameRoot: string) {
-    const hangman = new Hangman(),
-      ui = new UI(gameRoot),
-      keyboard = new Keyboard(gameRoot),
-      messages = new Messages(gameRoot),
-      messageHandler = new MessageHandler(),
-      hangmanResetListener = hangman.init.bind(hangman),
-      keyboardResetListener = keyboard.reset.bind(keyboard);
+  constructor(gameRootId: string, messageRootId: string) {
+    const gameRoot = document.getElementById(gameRootId) as HTMLDivElement,
+      messageRoot = document.getElementById(messageRootId) as HTMLDivElement;
 
-    messageHandler.setMessages(messages);
+    const routeConfig = {} as any;
+    routeConfig[Routes.Menu] = () => {
+      this.clearPage(gameRoot);
+      // tslint:disable:no-unused-expression
+      new Menu(gameRoot);
+    };
+    routeConfig[Routes.Game] = () => {
+      this.clearPage(gameRoot);
+      const hangman = new Hangman(),
+        game = new Game(gameRoot),
+        keyboard = new Keyboard(gameRootId),
+        messages = new Messages(messageRoot),
+        messageHandler = new MessageHandler(),
+        hangmanResetListener = hangman.init.bind(hangman),
+        keyboardResetListener = keyboard.reset.bind(keyboard);
 
-    ui.addResetListener(hangmanResetListener);
-    ui.addResetListener(keyboardResetListener);
+      messageHandler.setMessages(messages);
 
-    messages.addGameStartListener(hangmanResetListener);
-    messages.addGameStartListener(keyboardResetListener);
-    messages.setGraphicsProvider(ui.getGraphic.bind(ui));
+      messages.addGameStartListener(hangmanResetListener);
+      messages.addGameStartListener(keyboardResetListener);
+      messages.setGraphicsProvider(game.getGraphic.bind(game));
 
-    hangman.setWordListener(ui.updateWord.bind(ui));
-    hangman.setFailsListener(ui.updateFails.bind(ui));
-    hangman.setWordProvider(new RandomWordEngine());
-    hangman.setGameOverListener(messageHandler.showGameOverMessage.bind(messageHandler));
+      hangman.setWordListener(game.updateWord.bind(game));
+      hangman.setFailsListener(game.updateFails.bind(game));
+      hangman.setWordProvider(new RandomWordEngine());
+      hangman.setGameOverListener(messageHandler.showGameOverMessage.bind(messageHandler));
 
-    keyboard.setKeyListener(hangman.getLetterCallback());
+      keyboard.setKeyListener(hangman.getLetterCallback());
 
-    messageHandler.showStartMessage();
+      hangman.init();
+    };
+    routeConfig[Routes.Default] = routeConfig[Routes.Menu];
+
+    new Router(routeConfig).init();
+  }
+
+  private clearPage(gameRoot: HTMLDivElement) {
+    gameRoot.innerHTML = '';
   }
 }

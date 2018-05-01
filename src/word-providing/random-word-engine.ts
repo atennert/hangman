@@ -2,16 +2,19 @@
 
 import IWordProvider from './word-provider';
 
-const _WORDS = ['lol',
-  'dudelsack',
-  'haus',
-  'kaninchen',
-  'trueffel',
-  'autobahn',
-  'element',
-  'pflaster',
-  'luefter',
-  'birne'];
+const _WORDS = [
+  'Kanal',
+  'Eisenbahn',
+  'Dudelsack',
+  'Haus',
+  'Kaninchen',
+  'Trüffel',
+  'Autobahn',
+  'Element',
+  'Pflaster',
+  'Lüfter',
+  'Birne'
+];
 
 
 export default class RandomWordEngine implements IWordProvider {
