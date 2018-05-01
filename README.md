@@ -10,9 +10,6 @@ __master__:<br>
 [![Release](https://img.shields.io/github/release/atennert/hangman.svg)](https://github.com/atennert/hangman/releases)
 [![License](https://img.shields.io/github/license/atennert/hangman.svg)](https://opensource.org/licenses/MIT)
 
-__devel__:<br>
-[![Build Status](https://travis-ci.org/atennert/hangman.svg?branch=devel)](https://travis-ci.org/atennert/hangman)
-
 ## Features
 * Offline capable web app
 * Start a new run with the start/reset button
