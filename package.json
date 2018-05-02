@@ -1,6 +1,6 @@
 {
   "name": "hangman",
-  "version": "0.0.7",
+  "version": "0.2.1",
   "description": "A simple JS hangman implementation",
   "main": "./src/index.html",
   "scripts": {

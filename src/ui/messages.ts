@@ -44,6 +44,8 @@ export class Messages {
     this.gameMessageContent.appendChild(this.gameMessageText);
     this.gameMessageContent.appendChild(this.gameImageContainer);
     this.gameMessageContent.appendChild(this.gameMessageButton);
+
+    this.messageElem.innerHTML = '';
     this.messageElem.appendChild(this.gameMessageContent);
 
     this.addGameStartListener(this.hideMessage.bind(this));
