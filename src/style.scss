@@ -185,8 +185,7 @@ a {
 }
 
 .keyboard-box__key,
-.game__message-button,
-.game__reset {
+.game__message-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -202,8 +201,7 @@ a {
   }
 }
 
-.keyboard-box__key,
-.game__reset {
+.keyboard-box__key {
   font-size: 1.6em;
 }
 
@@ -257,8 +255,14 @@ a {
 }
 
 .game__message-button {
-  margin-top: 2vmin;
+  margin: 2vmin 1vmin 0;
   font-size: 1em;
+
+  &:hover,
+  &:focus {
+    background-color: $button-hover-color;
+    text-decoration: underline;
+  }
 }
 
 @media screen and (orientation: portrait) {

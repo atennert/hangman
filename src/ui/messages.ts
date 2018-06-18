@@ -1,14 +1,17 @@
 'use strict';
+import { Routes } from './router';
 
 interface IMessage {
   messageText: string;
-  buttonText: string;
+  againButtonText: string;
+  menuButtonText: string;
   showImage: boolean;
 }
 
 export class StatusMessage implements IMessage {
   public readonly messageText: string;
-  public readonly buttonText = 'Try again';
+  public readonly againButtonText = 'Try again';
+  public readonly menuButtonText = 'Go to menu';
   public readonly showImage: boolean;
 
   constructor(message: string, showImage: boolean) {
@@ -24,26 +27,34 @@ export class StatusMessage implements IMessage {
 export class Messages {
   private readonly gameMessageContent: any;
   private readonly gameMessageText: any;
-  private readonly gameMessageButton: any;
+  private readonly gameMessageAgainButton: any;
+  private readonly gameMessageMenuLink: any;
   private readonly gameImageContainer: any;
   private readonly messageElem: any;
 
-  private graphicsProvider: () => string;
+  private graphicsProvider: (() => string) | undefined;
 
   constructor(messageRoot: HTMLDivElement) {
     this.messageElem = messageRoot;
     this.gameMessageContent = document.createElement('div');
-    this.gameMessageButton = document.createElement('button');
+    this.gameMessageAgainButton = document.createElement('button');
+    this.gameMessageMenuLink = document.createElement('a');
     this.gameImageContainer = document.createElement('div');
     this.gameMessageText = document.createElement('p');
 
     this.gameMessageContent.className = 'game__message-content';
-    this.gameMessageButton.className = 'game__message-button';
-    this.gameMessageButton.setAttribute('type', 'button');
+    this.gameMessageAgainButton.className = 'game__message-button';
+    this.gameMessageAgainButton.setAttribute('type', 'button');
+    this.gameMessageMenuLink.className = 'game__message-button';
+    this.gameMessageMenuLink.href = Routes.Menu;
+    this.gameMessageMenuLink.onclick = () => {
+      this.hideMessage();
+    };
 
     this.gameMessageContent.appendChild(this.gameMessageText);
     this.gameMessageContent.appendChild(this.gameImageContainer);
-    this.gameMessageContent.appendChild(this.gameMessageButton);
+    this.gameMessageContent.appendChild(this.gameMessageAgainButton);
+    this.gameMessageContent.appendChild(this.gameMessageMenuLink);
     this.messageElem.appendChild(this.gameMessageContent);
 
     this.addGameStartListener(this.hideMessage.bind(this));
@@ -54,7 +65,7 @@ export class Messages {
   }
 
   public addGameStartListener(callback: any): void {
-    this.gameMessageButton.addEventListener('click', callback);
+    this.gameMessageAgainButton.addEventListener('click', callback);
   }
 
   private hideMessage() {
@@ -63,13 +74,14 @@ export class Messages {
 
   public showMessage(message: IMessage): void {
     this.gameMessageText.innerHTML = message.messageText;
-    this.gameImageContainer.innerHTML = this.graphicsProvider();
+    this.gameImageContainer.innerHTML = this.graphicsProvider && this.graphicsProvider();
     if (message.showImage) {
       this.gameImageContainer.removeAttribute('hidden');
     } else {
       this.gameImageContainer.setAttribute('hidden', 'hidden');
     }
-    this.gameMessageButton.textContent = message.buttonText;
+    this.gameMessageAgainButton.textContent = message.againButtonText;
+    this.gameMessageMenuLink.textContent = message.menuButtonText;
     this.messageElem.classList.add('show');
   }
 }
