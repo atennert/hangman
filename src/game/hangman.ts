@@ -5,8 +5,9 @@ import Keyboard from '../ui/keyboard'
 import RandomWordEngine from '../word-providing/random-word-engine';
 import { Messages } from '../ui/messages';
 import MessageHandler from '../ui/message-handler';
-import { Router, Routes } from '../ui/router';
+import { Routes, Router } from '../ui/router';
 import Menu from '../ui/menu';
+
 
 export default class HangmanGame {
   constructor(gameRootId: string, messageRootId: string) {

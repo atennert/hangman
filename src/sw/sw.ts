@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hangman-atennert-v3',
+const CACHE_NAME = 'hangman-atennert-v5',
   ALL_CACHES: any = [ // need any here for includes
     CACHE_NAME
   ];
