@@ -1,8 +1,6 @@
-var webpack = require('webpack');
-
 module.exports = {
   entry: {
-    app: __dirname + '/src/index.ts',
+    index: __dirname + '/src/index.ts',
     sw: __dirname + '/src/sw/sw.ts'
   },
   output: {
