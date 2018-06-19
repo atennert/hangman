@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp",
     "test": "mocha -r ts-node/register test/*.spec.ts",
-    "lint": "lint:ts && lint:css",
+    "lint": "npm run lint:ts && npm run lint:css",
     "lint:ts": "tslint ./src/**/*.ts",
     "lint:css": "sass-lint -v -q --max-warnings 0"
   },
