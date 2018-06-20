@@ -38,38 +38,32 @@ gulp.task('tests', () => {
     .pipe(mocha({
       require: ['ts-node/register'],
       reporter: 'list'
-    }))
+    }));
 })
 
-gulp.task('icons', gulp.parallel(
-  () => gulp.src('./src/icon.svg')
+gulp.task('icons', () => {
+  return gulp.src('./src/icon.svg')
     .pipe(spawn({
       cmd: 'convert',
       args: [
-        '-',
-        '-resize', '192x192',
         '-background', 'none',
-        'png:-'
-      ],
-      opts: {cwd: '.'},
-      filename: (base) => `${base}-192.png`
-    }))
-    .pipe(gulp.dest(`./public/${npmVersion}`)),
-
-  () => gulp.src('./src/icon.svg')
-    .pipe(spawn({
-      cmd: 'convert',
-      args: [
-        '-',
         '-resize', '512x512',
-        '-background', 'none',
-        'png:-'
+        './src/icon.svg',
+        `./public/${npmVersion}/icon-512.png`
       ],
-      opts: {cwd: '.'},
-      filename: (base) => `${base}-512.png`
+      opts: {cwd: '.'}
     }))
-    .pipe(gulp.dest(`./public/${npmVersion}`))
-  ));
+    .pipe(spawn({
+      cmd: 'convert',
+      args: [
+        '-background', 'none',
+        '-resize', '192x192',
+        './src/icon.svg',
+        `./public/${npmVersion}/icon-192.png`
+      ],
+      opts: {cwd: '.'}
+    }));
+});
 
 gulp.task('copy-page', () => {
   return gulp.src('./src/*.html')
