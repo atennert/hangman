@@ -25,14 +25,18 @@ export class StatusMessage implements IMessage {
  * this includes a welcome message and the game over message.
  */
 export class Messages {
-  private readonly gameMessageContent: any;
-  private readonly gameMessageText: any;
-  private readonly gameMessageAgainButton: any;
-  private readonly gameMessageMenuLink: any;
-  private readonly gameImageContainer: any;
-  private readonly messageElem: any;
+  /* tslint:disable-next-line: max-line-length */
+  private static readonly FOCUSSABLE_ELEMENTS_SELECTOR = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
-  private graphicsProvider: (() => string) | undefined;
+  private readonly gameMessageContent: HTMLDivElement;
+  private readonly gameMessageText: HTMLParagraphElement;
+  private readonly gameMessageAgainButton: HTMLButtonElement;
+  private readonly gameMessageMenuLink: HTMLAnchorElement;
+  private readonly gameImageContainer: HTMLDivElement;
+  private readonly messageElem: HTMLDivElement;
+
+  private graphicsProvider: (() => string) = () => '';
+
 
   constructor(messageRoot: HTMLDivElement) {
     this.messageElem = messageRoot;
@@ -70,11 +74,13 @@ export class Messages {
 
   private hideMessage() {
     this.messageElem.classList.remove('show');
+    window.onfocus = null;
+    window.onkeydown = null;
   }
 
   public showMessage(message: IMessage): void {
     this.gameMessageText.innerHTML = message.messageText;
-    this.gameImageContainer.innerHTML = this.graphicsProvider && this.graphicsProvider();
+    this.gameImageContainer.innerHTML = this.graphicsProvider();
     if (message.showImage) {
       this.gameImageContainer.removeAttribute('hidden');
     } else {
@@ -82,6 +88,43 @@ export class Messages {
     }
     this.gameMessageAgainButton.textContent = message.againButtonText;
     this.gameMessageMenuLink.textContent = message.menuButtonText;
+
+    this.setupKeyboardTrap();
+
     this.messageElem.classList.add('show');
+  }
+
+  private setupKeyboardTrap(): void {
+    const focussableElements = this.messageElem.querySelectorAll(Messages.FOCUSSABLE_ELEMENTS_SELECTOR);
+    const focussableElementArray = Array.prototype.slice.call(focussableElements) as Element[];
+
+    const firstTabStop = <HTMLElement>focussableElementArray[0];
+    const lastTabStop = <HTMLElement>focussableElementArray[focussableElementArray.length - 1];
+
+    // secure against address line tabbing
+    window.onfocus = () => firstTabStop.focus();
+
+    // modal window tabbing
+    window.onkeydown = (event: KeyboardEvent) => {
+      // paranoia check
+      if (focussableElementArray.indexOf(document.activeElement) === -1) {
+        firstTabStop.focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        if (event.shiftKey) {
+          if (document.activeElement === firstTabStop) {
+            event.preventDefault();
+            lastTabStop.focus();
+          }
+        } else if (document.activeElement === lastTabStop) {
+          event.preventDefault();
+          firstTabStop.focus();
+        }
+      }
+    };
+    firstTabStop.focus();
   }
 }

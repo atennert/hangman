@@ -29,7 +29,7 @@
     "@types/mocha": "^2.2.46",
     "@types/node": "^10.3.3",
     "chai": "^4.1.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-cssmin": "^0.2.0",
     "gulp-mocha": "^6.0.0",
     "gulp-sass": "^4.0.1",
