@@ -22,7 +22,7 @@ export default class MessageHandler {
         break;
       default:
         newMessage = new StatusMessage(
-          `<span class="game__message-content--big">You won</span><br>Looked for word: ${word}'<br>Wrong letters: ${letters}`, true);
+          `<span class="game__message-content--big">You won</span><br>Looked for word: ${word}<br>Wrong letters: ${letters}`, true);
         break;
     }
 

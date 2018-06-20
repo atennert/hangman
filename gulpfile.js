@@ -14,25 +14,8 @@ const content = fs.readFileSync('package.json');
 
 const npmVersion = JSON.parse(content).version;
 
-gulp.task('default', ['styles', 'scripts', 'tests', 'copy-page', 'icons', 'copy-manifest'], () => {
-  gulp.watch('src/*.scss', ['styles']);
-  gulp.watch('src/**/*.ts', ['tests', 'scripts']);
-  gulp.watch('test/**/*.ts', ['tests']);
-  gulp.watch('src/*.html', ['copy-page']);
-  gulp.watch('src/*.manifest', ['copy-manifest']);
-  gulp.watch('src/icon.svg', ['icons']);
-});
-
-gulp.task('dist', [
-  'styles',
-  'scripts',
-  'copy-page',
-  'copy.manifest',
-  'icons'
-]);
-
 gulp.task('styles', () => {
-  gulp.src('./src/*.scss')
+  return gulp.src('./src/*.scss')
     .pipe(sassLint({configFile: '.sass-lint.yml'}))
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError())
@@ -42,7 +25,7 @@ gulp.task('styles', () => {
 });
 
 gulp.task('scripts', () => {
-  gulp.src('./src/index.ts')
+  return gulp.src('./src/index.ts')
     .pipe(tsLint({configuration: './tslint.json'}))
     .pipe(tsLint.report({emitError: false}))
     .pipe(webpack(require('./webpack.config.js')))
@@ -51,49 +34,60 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('tests', () => {
-  gulp.src('./test/**/*.spec.ts')
+  return gulp.src('./test/**/*.spec.ts')
     .pipe(mocha({
       require: ['ts-node/register'],
       reporter: 'list'
-    }))
+    }));
 })
 
 gulp.task('icons', () => {
-  gulp.src('./src/icon.svg')
+  return gulp.src('./src/icon.svg')
     .pipe(spawn({
       cmd: 'convert',
       args: [
-        '-',
-        '-resize', '192x192',
         '-background', 'none',
-        'png:-'
-      ],
-      opts: {cwd: '.'},
-      filename: (base, ext) => `${base}-192.png`
-    }))
-    .pipe(gulp.dest(`./public/${npmVersion}`));
-
-  gulp.src('./src/icon.svg')
-    .pipe(spawn({
-      cmd: 'convert',
-      args: [
-        '-',
         '-resize', '512x512',
-        '-background', 'none',
-        'png:-'
+        './src/icon.svg',
+        `./public/${npmVersion}/icon-512.png`
       ],
-      opts: {cwd: '.'},
-      filename: (base, ext) => `${base}-512.png`
+      opts: {cwd: '.'}
     }))
-    .pipe(gulp.dest(`./public/${npmVersion}`));
+    .pipe(spawn({
+      cmd: 'convert',
+      args: [
+        '-background', 'none',
+        '-resize', '192x192',
+        './src/icon.svg',
+        `./public/${npmVersion}/icon-192.png`
+      ],
+      opts: {cwd: '.'}
+    }));
 });
 
 gulp.task('copy-page', () => {
-  gulp.src('./src/*.html')
+  return gulp.src('./src/*.html')
     .pipe(gulp.dest(`./public/${npmVersion}`));
 });
 
 gulp.task('copy-manifest', () => {
-  gulp.src('./src/manifest.json')
+  return gulp.src('./src/manifest.json')
     .pipe(gulp.dest(`./public/${npmVersion}`));
 });
+
+gulp.task('default', gulp.series(gulp.parallel('styles', 'scripts', 'tests', 'copy-page', 'icons', 'copy-manifest'), function watch() {
+  gulp.watch('src/*.scss', gulp.series('styles'));
+  gulp.watch('src/**/*.ts', gulp.series('tests', 'scripts'));
+  gulp.watch('test/**/*.ts', gulp.series('tests'));
+  gulp.watch('src/*.html', gulp.series('copy-page'));
+  gulp.watch('src/*.manifest', gulp.series('copy-manifest'));
+  gulp.watch('src/icon.svg', gulp.series('icons'));
+}));
+
+gulp.task('dist', gulp.parallel(
+  'styles',
+  'scripts',
+  'copy-page',
+  'copy-manifest',
+  'icons'
+));
