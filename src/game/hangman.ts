@@ -17,11 +17,13 @@ export default class HangmanGame {
     const routeConfig = {} as any;
     routeConfig[Routes.Menu] = () => {
       this.clearPage(gameRoot);
+      this.clearPage(messageRoot);
       // tslint:disable:no-unused-expression
       new Menu(gameRoot);
     };
     routeConfig[Routes.Game] = () => {
       this.clearPage(gameRoot);
+      this.clearPage(messageRoot);
       const hangman = new Hangman(),
         game = new Game(gameRoot),
         keyboard = new Keyboard(gameRootId),
@@ -50,7 +52,7 @@ export default class HangmanGame {
     new Router(routeConfig).init();
   }
 
-  private clearPage(gameRoot: HTMLDivElement) {
-    gameRoot.innerHTML = '';
+  private clearPage(element: HTMLDivElement) {
+    element.innerHTML = '';
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "hangman",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A simple JS hangman implementation",
   "main": "./src/index.html",
   "scripts": {
@@ -32,6 +32,7 @@
     "gulp": "^4.0.0",
     "gulp-cssmin": "^0.2.0",
     "gulp-mocha": "^6.0.0",
+    "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sass-lint": "^1.4.0",
     "gulp-spawn": "^0.4.0",
