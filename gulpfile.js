@@ -7,6 +7,7 @@ const sass = require('gulp-sass');
 const sassLint = require('gulp-sass-lint');
 const cssmin = require('gulp-cssmin');
 const spawn = require('gulp-spawn');
+const replace = require('gulp-replace');
 
 const fs = require('fs');
 
@@ -30,6 +31,7 @@ gulp.task('scripts', () => {
     .pipe(tsLint.report({emitError: false}))
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(uglify())
+    .pipe(replace('$npm_version$', npmVersion))
     .pipe(gulp.dest(`./public/${npmVersion}`));
 });
 
@@ -41,29 +43,35 @@ gulp.task('tests', () => {
     }));
 })
 
-gulp.task('icons', () => {
-  return gulp.src('./src/icon.svg')
+gulp.task('icons', gulp.parallel(
+  () => gulp.src('./src/icon.svg')
     .pipe(spawn({
       cmd: 'convert',
       args: [
         '-background', 'none',
         '-resize', '512x512',
-        './src/icon.svg',
-        `./public/${npmVersion}/icon-512.png`
+        '-',
+        `png:-`
       ],
-      opts: {cwd: '.'}
+      opts: {cwd: '.'},
+      filename: (base, ext) => `${base}-512.png`
     }))
+    .pipe(gulp.dest(`./public/${npmVersion}`)),
+
+  () => gulp.src('./src/icon.svg')
     .pipe(spawn({
       cmd: 'convert',
       args: [
         '-background', 'none',
         '-resize', '192x192',
-        './src/icon.svg',
-        `./public/${npmVersion}/icon-192.png`
+        '-',
+        `png:-`
       ],
-      opts: {cwd: '.'}
-    }));
-});
+      opts: {cwd: '.'},
+      filename: (base, ext) => `${base}-192.png`
+    }))
+    .pipe(gulp.dest(`./public/${npmVersion}`))
+));
 
 gulp.task('copy-page', () => {
   return gulp.src('./src/*.html')

@@ -37,11 +37,14 @@ export class Messages {
 
   private graphicsProvider: (() => string) = () => '';
 
+  private focusWindowListener = () => {};
+  private keyDownListener: ((e: KeyboardEvent) => void) = () => {};
 
   constructor(messageRoot: HTMLDivElement) {
     this.messageElem = messageRoot;
     this.gameMessageContent = document.createElement('div');
     this.gameMessageAgainButton = document.createElement('button');
+    // TODO put this button in a nav
     this.gameMessageMenuLink = document.createElement('a');
     this.gameImageContainer = document.createElement('div');
     this.gameMessageText = document.createElement('p');
@@ -74,8 +77,8 @@ export class Messages {
 
   private hideMessage() {
     this.messageElem.classList.remove('show');
-    window.onfocus = null;
-    window.onkeydown = null;
+    window.removeEventListener('focus', this.focusWindowListener);
+    window.removeEventListener('keydown', this.keyDownListener);
   }
 
   public showMessage(message: IMessage): void {
@@ -102,10 +105,11 @@ export class Messages {
     const lastTabStop = <HTMLElement>focussableElementArray[focussableElementArray.length - 1];
 
     // secure against address line tabbing
-    window.onfocus = () => firstTabStop.focus();
+    this.focusWindowListener = () => firstTabStop.focus();
+    window.addEventListener('focus', this.focusWindowListener);
 
     // modal window tabbing
-    window.onkeydown = (event: KeyboardEvent) => {
+    this.keyDownListener = (event: KeyboardEvent) => {
       // paranoia check
       if (focussableElementArray.indexOf(document.activeElement) === -1) {
         firstTabStop.focus();
@@ -125,6 +129,7 @@ export class Messages {
         }
       }
     };
+    window.addEventListener('keydown', this.keyDownListener);
     firstTabStop.focus();
   }
 }
