@@ -13,6 +13,6 @@ function registerServiceWorker(): void {
 }
 
 // tslint:disable:no-unused-expression
-new HangmanGame('game', 'message');
+new HangmanGame('game');
 
 registerServiceWorker();

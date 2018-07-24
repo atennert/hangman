@@ -1,7 +1,8 @@
 $color: #fff;
 $background-color: #244;
 $button-hover-color: #366;
-$background-color-opaque: rgba(17, 34, 34, .7);
+$button-checked-color: #488;
+$outline-color: #9f9;
 
 html,
 body {
@@ -21,16 +22,34 @@ body {
   box-sizing: border-box;
 }
 
-body {
-  font-size: 16px;
-  font-family: sans-serif;
-  background-color: $background-color;
-  color: $color;
+a,
+button {
+  &:focus,
+  &:hover {
+    background-color: $button-hover-color;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 3px 2px $outline-color;
+    }
 }
 
 a {
   color: $color;
   text-decoration: none;
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+body {
+  font-size: 16px;
+  font-family: sans-serif;
+  background-color: $background-color;
+  color: $color;
 }
 
 .hangman__image {
@@ -41,6 +60,11 @@ a {
     stroke-width: 4px;
     fill: none;
   }
+}
+
+#game {
+  width: 100%;
+  height: 100%;
 }
 
 // menu ==============================================
@@ -97,7 +121,9 @@ a {
   list-style-type: none;
 }
 
-.menu__link {
+.menu__link,
+.game__over-button,
+.keyboard-box__key {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -108,12 +134,7 @@ a {
   font-weight: 500;
   border-radius: 1vmin;
   font-size: 1.4em;
-
-  &:hover,
-  &:focus {
-    background-color: $button-hover-color;
-    text-decoration: underline;
-  }
+  margin: 2vmin 1vmin 0;
 }
 
 // game ==============================================
@@ -178,91 +199,95 @@ a {
   width: 85vw;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: stretch;
   grid-gap: .5vmin;
   padding: .5vmin;
   border: solid .3vmin $color;
 }
 
-.keyboard-box__key,
-.game__message-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2px 5px;
-  border: solid .3vmin $color;
-  background-color: $background-color;
-  color: $color;
-  font-weight: 500;
-  border-radius: 1vmin;
+.key-row {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: .5vmin;
+}
 
-  &:hover {
-    background-color: $button-hover-color;
-  }
+.key-cell {
+  width: 100%;
+  height: 100%;
 }
 
 .keyboard-box__key {
   font-size: 1.6em;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  &[aria-selected='true'] {
+    pointer-events: none;
+    background-color: $button-checked-color;
+  }
 }
 
-// messages ============================================
+// game over ============================================
 
-#message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.game__over-content {
+  display: grid;
+  grid-template-areas:
+  'game-over-head game-over-head'
+  'game-over-main game-over-main'
+  'game-over-secondary game-over-secondary'
+  'game-over-image game-over-nav';
+  grid-gap: 1vmin;
+  justify-items: center;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
-  background-color: $background-color-opaque;
-  opacity: 0;
-  pointer-events: none;
-  will-change: opacity;
-  transition: opacity .2s;
-  font-size: 1.1em;
+  font-size: 1em;
+  text-align: center;
+  padding: 3vmin;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto auto 1fr;
 
-  &.show {
-    opacity: 1;
-    pointer-events: auto;
+  .game__over-image--container {
+    grid-area: game-over-image;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .hangman__image {
-    height: 30vh;
-    width: 30vh;
-    margin-top: 2vh;
-    border: 1px solid $color;
+    max-width: 100%;
+    max-height: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
   }
 }
 
-.game__message-content {
-  background-color: $background-color;
-  border: solid .3vmin $color;
-  border-radius: 1vmin;
-  padding: 12px;
-  text-align: center;
-}
-
-.game__message-content--big {
-  font-size: 1.4em;
+.game__over-content--big {
+  grid-area: game-over-head;
+  font-size: 1.6em;
   font-weight: 500;
 }
 
-.game__message-content--bigger {
-  font-size: 1.6em;
+.game__over-content--main {
+  grid-area: game-over-main;
+  font-size: 1.1em;
 }
 
-.game__message-button {
-  margin: 2vmin 1vmin 0;
-  font-size: 1em;
+.game__over-content--secondary {
+  grid-area: game-over-secondary;
+  font-size: 1.1em;
+}
 
-  &:hover,
-  &:focus {
-    background-color: $button-hover-color;
-    text-decoration: underline;
-  }
+.game__over-navigation {
+  grid-area: game-over-nav;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: space-around;
 }
 
 @media screen and (orientation: portrait) {
@@ -291,9 +316,18 @@ a {
     width: 100%;
   }
 
-  // messages ============================================
+  // game over ============================================
 
-  #game__message {
+  .game__over-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 2fr 1fr;
+    grid-template-areas:
+    'game-over-head'
+    'game-over-main'
+    'game-over-secondary'
+    'game-over-image'
+    'game-over-nav';
+
     .hangman__image {
       height: 45vw;
       width: 45vw;

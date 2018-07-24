@@ -16,7 +16,7 @@ export default class Hangman {
   private wordCallback: (word: string) => void = () => {};
   private gameOverListener: (word: string, fails: string[], maxFails: number) => void = () => {};
 
-  init(): void {
+  public init(): void {
     if (this.wordProvider) {
       this.wordProvider.getWord()
         .then(this.setWord.bind(this))
@@ -24,20 +24,28 @@ export default class Hangman {
     }
   }
 
-  setFailsListener(listener: (fails: number, maxFails: number) => void): void {
+  public setFailsListener(listener: (fails: number, maxFails: number) => void): void {
     this.failsCallback = listener;
   }
 
-  setWordListener(listener: (word: string) => void): void {
+  public setWordListener(listener: (word: string) => void): void {
     this.wordCallback = listener;
   }
 
-  setWordProvider(wordProvider: IWordProvider): void {
+  public setWordProvider(wordProvider: IWordProvider): void {
     this.wordProvider = wordProvider;
   }
 
-  setGameOverListener(gameOverListener: (word: string, fails: string[], maxFails: number) => void) {
+  public setGameOverListener(gameOverListener: (word: string, fails: string[], maxFails: number) => void) {
     this.gameOverListener = gameOverListener;
+  }
+
+  public get result(): {currentWord: string, fails: string[], maxFails: number} {
+    return {
+      currentWord: this.currentWord,
+      fails: this.wrongLetters,
+      maxFails: MAX_FAILS,
+    }
   }
 
   private setWord(word: string): void {

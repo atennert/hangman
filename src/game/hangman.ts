@@ -1,55 +1,59 @@
-'use strict';
 import Hangman from './hangman-ki';
 import Game from '../ui/game';
-import Keyboard from '../ui/keyboard'
+import Keyboard from '../ui/keyboard';
 import RandomWordEngine from '../word-providing/random-word-engine';
-import { Messages } from '../ui/messages';
-import MessageHandler from '../ui/message-handler';
 import { Routes, Router } from '../ui/router';
 import Menu from '../ui/menu';
+import { GameOver } from '../ui/game-over';
+import { RouteOption } from '../ui/route-option';
 
 
 export default class HangmanGame {
-  constructor(gameRootId: string, messageRootId: string) {
-    const gameRoot = document.getElementById(gameRootId) as HTMLDivElement,
-      messageRoot = document.getElementById(messageRootId) as HTMLDivElement;
+  constructor(gameRootId: string) {
+    const gameRoot = document.getElementById(gameRootId) as HTMLDivElement;
+    const hangman = new Hangman();
+    let keyboard: Keyboard;
 
-    const routeConfig = {} as any;
-    routeConfig[Routes.Menu] = () => {
+    const screenConfig: {[key: string]: RouteOption} = {};
+    screenConfig[Routes.Menu] = {activation: () => {
       this.clearPage(gameRoot);
-      this.clearPage(messageRoot);
       // tslint:disable:no-unused-expression
       new Menu(gameRoot);
-    };
-    routeConfig[Routes.Game] = () => {
+      // tslint:enable: no-unused-expression
+    }, deactivation: () => {/* Nothing to do */}};
+
+    screenConfig[Routes.Game] = {activation: () => {
       this.clearPage(gameRoot);
-      this.clearPage(messageRoot);
-      const hangman = new Hangman(),
-        game = new Game(gameRoot),
-        keyboard = new Keyboard(gameRootId),
-        messages = new Messages(messageRoot),
-        messageHandler = new MessageHandler(),
-        hangmanResetListener = hangman.init.bind(hangman),
-        keyboardResetListener = keyboard.reset.bind(keyboard);
-
-      messageHandler.setMessages(messages);
-
-      messages.addGameStartListener(hangmanResetListener);
-      messages.addGameStartListener(keyboardResetListener);
-      messages.setGraphicsProvider(game.getGraphic.bind(game));
+      const game = new Game(gameRoot);
+      keyboard = new Keyboard(gameRootId);
 
       hangman.setWordListener(game.updateWord.bind(game));
       hangman.setFailsListener(game.updateFails.bind(game));
       hangman.setWordProvider(new RandomWordEngine());
-      hangman.setGameOverListener(messageHandler.showGameOverMessage.bind(messageHandler));
+      hangman.setGameOverListener(game.gameOver.bind(game));
 
       keyboard.setKeyListener(hangman.getLetterCallback());
 
       hangman.init();
-    };
-    routeConfig[Routes.Default] = routeConfig[Routes.Menu];
+    }, deactivation: () => {
+      hangman.setWordListener(() => {});
+      hangman.setFailsListener(() => {});
+      hangman.setGameOverListener(() => {});
 
-    new Router(routeConfig).init();
+      keyboard.setKeyListener(() => {});
+    }};
+
+    screenConfig[Routes.GameOver] = {activation: () => {
+      this.clearPage(gameRoot);
+      const gameOver = new GameOver(gameRoot);
+      gameOver.setData(hangman.result);
+    }, deactivation: () => {
+      hangman.setGameOverListener(() => {});
+    }}
+
+    screenConfig[Routes.Default] = screenConfig[Routes.Menu];
+
+    new Router(screenConfig).init();
   }
 
   private clearPage(element: HTMLDivElement) {

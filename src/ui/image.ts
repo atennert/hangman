@@ -4,7 +4,7 @@
  * Provide the hangman image as SVG.
  */
 export default function getImage(): string {
-  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" version="1.1" class="hangman__image">
+  return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" version="1.1" class="hangman__image" aria-hidden="true">
 <title>Hangman</title>
 <desc>Hangman stick figure image</desc>
 <line class="hangman__part hangman__part--1" x1="50" x2="50" y1="350" y2="50"/>
