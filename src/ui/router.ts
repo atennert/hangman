@@ -1,28 +1,34 @@
-'use strict';
+import { RouteOption } from './route-option';
 
 export enum Routes {
   Menu = '#menu',
   Game = '#game',
+  GameOver = '#game-over',
   Default = 'default'
 }
 
 export class Router {
-  constructor(private readonly routeConfig: any) {}
+  private lastScreen: string = Routes.Menu;
 
-  public init() {
+  constructor(private readonly screenRouteConfig: {[key: string]: RouteOption}) {}
+
+  public init(): void {
     window.addEventListener('hashchange', this.changeRoute.bind(this));
 
-    this.changeRoute();
+    requestAnimationFrame(this.changeRoute.bind(this));
   }
 
-  private changeRoute() {
-    const target = location.hash,
-      action = this.routeConfig[target];
-    if (action) {
-      action();
-    } else {
-      this.routeConfig[Routes.Default]();
+  private changeRoute(): void {
+    let target = location.hash;
+
+    if (Object.keys(this.screenRouteConfig).indexOf(target) === -1) {
+      target = Routes.Default;
     }
-    return 0;
+
+    if (this.lastScreen !== target) {
+      this.screenRouteConfig[this.lastScreen].deactivation();
+      this.screenRouteConfig[target].activation();
+      this.lastScreen = target;
+    }
   }
 }

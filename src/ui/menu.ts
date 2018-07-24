@@ -1,4 +1,3 @@
-'use strict';
 import getImage from './image';
 import { Routes } from './router';
 
@@ -22,6 +21,7 @@ export default class Menu {
       menuContainer = document.createElement('nav'),
       image = document.createElement('div'),
       menu = document.createElement('ul'),
+      container = document.createElement('div'),
       fragment = document.createDocumentFragment();
 
     title.textContent = 'Hangman';
@@ -53,12 +53,13 @@ export default class Menu {
     }
     menuContainer.appendChild(menu);
 
-    fragment.appendChild(header);
-    fragment.appendChild(description);
-    fragment.appendChild(image);
-    fragment.appendChild(menuContainer);
+    container.className = 'menu';
+    container.appendChild(header);
+    container.appendChild(description);
+    container.appendChild(image);
+    container.appendChild(menuContainer);
 
-    gameRoot.className = 'menu';
+    fragment.appendChild(container);
     gameRoot.appendChild(fragment);
   }
 }

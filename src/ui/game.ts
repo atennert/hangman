@@ -1,4 +1,3 @@
-'use strict';
 import getImage from './image';
 import { Routes } from './router';
 
@@ -9,6 +8,7 @@ export default class Game {
 
   constructor(gameRoot: HTMLDivElement) {
     const fragment = document.createDocumentFragment(),
+      gameContainer = document.createElement('div'),
       gameInfoBar = document.createElement('div'),
       gameTitle = document.createElement('div'),
       gameFailCount = document.createElement('p'),
@@ -17,12 +17,15 @@ export default class Game {
     this._gameRoot = gameRoot;
     this._container = document.createElement('div');
 
+    gameContainer.className = 'game';
+
     this._container.className = 'game__output';
     gameInfoBar.className = 'game__infobar';
     gameTitle.className = 'game__title';
     gameTitle.textContent = 'Hangman';
     gameFailCount.className = 'game__fail-count';
     gameFailCount.textContent = 'Errors:';
+    gameFailCount.setAttribute('aria-live', 'assertive');
     gameMenuLink.textContent = 'Back to Menu';
     gameMenuLink.href = Routes.Menu;
     gameMenuLink.className = 'menu__link';
@@ -32,13 +35,13 @@ export default class Game {
     gameInfoBar.appendChild(gameFailCount);
     gameInfoBar.appendChild(gameMenu);
 
-    fragment.appendChild(gameInfoBar);
-    fragment.appendChild(this._container);
+    gameContainer.appendChild(gameInfoBar);
+    gameContainer.appendChild(this._container);
 
-    this._gameRoot.className = 'game';
+    fragment.appendChild(gameContainer);
     this._gameRoot.appendChild(fragment);
 
-    this._container.innerHTML = `${getImage()}<p class="game__word"></p>`;
+    this._container.innerHTML = `${getImage()}<p class="game__word" aria-live="assertive" aria-label="Solution word"></p>`;
   }
 
   private resetGraphic(): void {
@@ -47,21 +50,21 @@ export default class Game {
     });
   }
 
-  getGraphic(): string {
-    return document.querySelector('.hangman__image')!.outerHTML;
-  }
-
-  updateWord(word: string): void {
+  public updateWord(word: string): void {
     this._container.querySelector('.game__word').textContent = word;
   }
 
-  updateFails(fails: number, maxFails: number): void {
+  public updateFails(fails: number, maxFails: number): void {
+    this._gameRoot.querySelector('.game__fail-count')!.textContent = `Errors: ${fails} of ${maxFails}`;
     if (fails === 0) {
       this.resetGraphic();
     }
-    this._gameRoot.querySelector('.game__fail-count')!.textContent = `Errors: ${fails}/${maxFails}`;
     if (fails) {
       this._container.querySelector(`.hangman__part--${fails}`).removeAttribute('style');
     }
+  }
+
+  public gameOver(): void {
+    location.hash = Routes.GameOver;
   }
 }
