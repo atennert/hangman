@@ -4,6 +4,7 @@ export enum Routes {
   Menu = '#menu',
   Game = '#game',
   GameOver = '#game-over',
+  About = '#about',
   Default = 'default'
 }
 

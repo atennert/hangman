@@ -6,6 +6,7 @@ import { Routes, Router } from '../ui/router';
 import Menu from '../ui/menu';
 import { GameOver } from '../ui/game-over';
 import { RouteOption } from '../ui/route-option';
+import { About } from '../ui/about';
 
 
 export default class HangmanGame {
@@ -49,7 +50,13 @@ export default class HangmanGame {
       gameOver.setData(hangman.result);
     }, deactivation: () => {
       hangman.setGameOverListener(() => {});
-    }}
+    }};
+    screenConfig[Routes.About] = {activation: () => {
+      this.clearPage(gameRoot);
+      // tslint:disable:no-unused-expression
+      new About(gameRoot);
+      // tslint:enable:no-unused-expression
+    }, deactivation: () => {}};
 
     screenConfig[Routes.Default] = screenConfig[Routes.Menu];
 

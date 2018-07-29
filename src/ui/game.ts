@@ -10,7 +10,7 @@ export default class Game {
     const fragment = document.createDocumentFragment(),
       gameContainer = document.createElement('div'),
       gameInfoBar = document.createElement('div'),
-      gameTitle = document.createElement('div'),
+      gameTitle = document.createElement('h1'),
       gameFailCount = document.createElement('p'),
       gameMenu = document.createElement('nav'),
       gameMenuLink = document.createElement('a');
@@ -21,7 +21,6 @@ export default class Game {
 
     this._container.className = 'game__output';
     gameInfoBar.className = 'game__infobar';
-    gameTitle.className = 'game__title';
     gameTitle.textContent = 'Hangman';
     gameFailCount.className = 'game__fail-count';
     gameFailCount.textContent = 'Errors:';

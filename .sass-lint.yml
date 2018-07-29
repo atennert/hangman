@@ -45,7 +45,7 @@ rules:
   # Nesting
   force-attribute-nesting: 0
   force-element-nesting: 0
-  force-pseudo-nesting: 1
+  force-pseudo-nesting: 0
   # Name Formats
   class-name-format:
     - 1
@@ -73,7 +73,7 @@ rules:
   hex-notation: 1
   indentation: 1
   leading-zero: 0
-  nesting-depth: 1
+  nesting-depth: 3
   property-sort-order: 0
   pseudo-element: 0
   quotes: 1

@@ -67,6 +67,40 @@ body {
   height: 100%;
 }
 
+ul {
+  list-style-position: inside;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: .5em;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 2.2em;
+  margin-bottom: .4em;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.7em;
+  margin: .4em 0;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 1.4em;
+  margin-bottom: .4em;
+  font-weight: 400;
+}
+
+p,
+ul {
+  margin-bottom: .4em;
+}
+
+
 // menu ==============================================
 
 .menu {
@@ -114,11 +148,15 @@ body {
   grid-area: menu-menu;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  align-items: stretch;
 }
 
-.menu__list {
+.nav__list {
   list-style-type: none;
+
+  li {
+    margin-bottom: 1em;
+  }
 }
 
 .menu__link,
@@ -134,7 +172,8 @@ body {
   font-weight: 500;
   border-radius: 1vmin;
   font-size: 1.4em;
-  margin: 2vmin 1vmin 0;
+  width: 100%;
+  text-align: center;
 }
 
 // game ==============================================
@@ -157,13 +196,6 @@ body {
 
 .game__infobar {
   grid-area: infobar;
-}
-
-.game__title,
-.menu__title {
-  font-size: 3em;
-  margin-bottom: 2vh;
-  font-weight: 400;
 }
 
 .game__fail-count {
@@ -286,8 +318,41 @@ body {
   grid-area: game-over-nav;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-content: space-around;
+  align-items: stretch;
+}
+
+// about =============================================
+
+.about {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 70em;
+  padding: 2vmin;
+
+  a:not(.menu__link) {
+    text-decoration: underline;
+
+    &:focus,
+    &:hover {
+      font-weight: 600;
+      background-color: unset;
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 3px 2px $outline-color;
+    }
+  }
+
+  .menu__link {
+    width: unset;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+  }
 }
 
 @media screen and (orientation: portrait) {
