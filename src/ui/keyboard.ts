@@ -67,23 +67,14 @@ export default class Keyboard {
     this.keys[0].tabIndex = 0;
     this.keys[0].addEventListener('focus', () => this.currentIndex = 0);
 
-    let keyRow: HTMLDivElement,
-      cell: HTMLSpanElement,
-      buttonCounter = 0;
-    for (let i = 0; i < 3; i++) {
-      keyRow = document.createElement('div');
-      keyRow.className = 'key-row';
-      keyRow.setAttribute('role', 'row');
-      do {
+    let cell: HTMLSpanElement;
+    for (key of this.keys) {
         cell = document.createElement('span');
         cell.setAttribute('role', 'gridcell');
         cell.className = 'key-cell';
-        cell.appendChild(this.keys[buttonCounter]);
-        keyRow.appendChild(cell);
-        buttonCounter++;
-      } while (buttonCounter % 10 !== 0);
-      this.keyboardBox.appendChild(keyRow);
-    }
+        cell.appendChild(key);
+        this.keyboardBox.appendChild(cell);
+      };
 
     fragment.appendChild(this.keyboardBox);
     gameContainer.appendChild(fragment);

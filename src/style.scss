@@ -231,17 +231,13 @@ ul {
   width: 85vw;
   margin: 0 auto;
   display: grid;
+  grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(3, 1fr);
   justify-items: stretch;
+  align-items: stretch;
   grid-gap: .5vmin;
   padding: .5vmin;
   border: solid .3vmin $color;
-}
-
-.key-row {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: .5vmin;
 }
 
 .key-cell {
@@ -254,6 +250,7 @@ ul {
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: .2em 0;
 
   &[aria-selected='true'] {
     pointer-events: none;
