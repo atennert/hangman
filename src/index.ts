@@ -14,5 +14,6 @@ function registerServiceWorker(): void {
 
 // tslint:disable:no-unused-expression
 new HangmanGame('game');
+// tslint:enable:no-unused-expression
 
 registerServiceWorker();

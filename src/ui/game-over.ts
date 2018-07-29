@@ -11,6 +11,7 @@ export class GameOver {
   constructor(gameRoot: HTMLDivElement) {
     const gameOverContent = document.createElement('div'),
       navigation = document.createElement('nav'),
+      navList = document.createElement('ul'),
       gameOverAgainLink = document.createElement('a'),
       gameOverMenuLink = document.createElement('a');
     this.gameImageContainer = document.createElement('div'),
@@ -33,8 +34,15 @@ export class GameOver {
     this.gameImageContainer.innerHTML = getImage();
     this.gameImageContainer.className = 'game__over-image--container';
 
-    navigation.appendChild(gameOverAgainLink);
-    navigation.appendChild(gameOverMenuLink);
+    navList.className = 'nav__list';
+    let navEntry: HTMLLIElement;
+    [gameOverAgainLink, gameOverMenuLink].forEach((link) => {
+      navEntry = document.createElement('li');
+      navEntry.appendChild(link);
+      navList.appendChild(navEntry);
+    });
+
+    navigation.appendChild(navList);
     gameOverContent.appendChild(this.gameOverHead);
     gameOverContent.appendChild(this.gameOverMain);
     gameOverContent.appendChild(this.gameOverSecondary);
