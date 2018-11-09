@@ -1,12 +1,12 @@
 import Hangman from './hangman-ki';
 import Game from '../ui/game';
 import Keyboard from '../ui/keyboard';
-import RandomWordEngine from '../word-providing/random-word-engine';
 import { Routes, Router } from '../ui/router';
 import Menu from '../ui/menu';
 import { GameOver } from '../ui/game-over';
 import { RouteOption } from '../ui/route-option';
 import { About } from '../ui/about';
+import KrautWordEngine from '../word-providing/kraut-word-engine';
 
 
 export default class HangmanGame {
@@ -30,7 +30,7 @@ export default class HangmanGame {
 
       hangman.setWordListener(game.updateWord.bind(game));
       hangman.setFailsListener(game.updateFails.bind(game));
-      hangman.setWordProvider(new RandomWordEngine());
+      hangman.setWordProvider(new KrautWordEngine());
       hangman.setGameOverListener(game.gameOver.bind(game));
 
       keyboard.setKeyListener(hangman.getLetterCallback());
