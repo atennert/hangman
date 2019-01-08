@@ -42,9 +42,8 @@ export default class Keyboard {
 
   private _listenerCallback: ((s: string) => void) = () => {};
 
-  constructor(gameRoot: string) {
+  constructor(gameContainer: HTMLDivElement) {
     const fragment = document.createDocumentFragment(),
-      gameContainer = document.querySelector(`.${gameRoot}`)!,
       keyListener = this._handleKeyEvent.bind(this);
 
       this.keyboardBox = document.createElement('div'),

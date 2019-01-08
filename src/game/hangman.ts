@@ -7,6 +7,8 @@ import { GameOver } from '../ui/game-over';
 import { RouteOption } from '../ui/route-option';
 import { About } from '../ui/about';
 import KrautWordEngine from '../word-providing/kraut-word-engine';
+import LoadingOverlay from '../ui/loading-overlay';
+import IWordProvider from '../word-providing/word-provider';
 
 
 export default class HangmanGame {
@@ -26,16 +28,22 @@ export default class HangmanGame {
     screenConfig[Routes.Game] = {activation: () => {
       this.clearPage(gameRoot);
       const game = new Game(gameRoot);
-      keyboard = new Keyboard(gameRootId);
+      keyboard = new Keyboard(game.gameContainer);
+      const loadingOverlay = new LoadingOverlay(gameRoot);
+      // TODO use factory
+      const wordProvider = new KrautWordEngine() as IWordProvider;
 
       hangman.setWordListener(game.updateWord.bind(game));
       hangman.setFailsListener(game.updateFails.bind(game));
-      hangman.setWordProvider(new KrautWordEngine());
       hangman.setGameOverListener(game.gameOver.bind(game));
 
       keyboard.setKeyListener(hangman.getLetterCallback());
 
-      hangman.init();
+      // if there will be more loading handling, this should be moved into it's own class
+      wordProvider.getWord()
+        .then((word) => hangman.setWord(word))
+        .catch((error) => console.error('HangmanGame.Game[activation]: no word provided', error))
+        .then(() => loadingOverlay.removeOverlay(gameRoot));
     }, deactivation: () => {
       hangman.setWordListener(() => {});
       hangman.setFailsListener(() => {});

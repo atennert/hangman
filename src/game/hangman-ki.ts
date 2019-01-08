@@ -1,11 +1,8 @@
 'use strict';
-import IWordProvider from '../word-providing/word-provider';
 
 const MAX_FAILS = 10;
 
 export default class Hangman {
-  private wordProvider: IWordProvider | undefined;
-
   private fails = 0;
   private usedLetters: string[] = [];
   private wrongLetters: string[] = [];
@@ -16,24 +13,12 @@ export default class Hangman {
   private wordCallback: (word: string) => void = () => {};
   private gameOverListener: (word: string, fails: string[], maxFails: number) => void = () => {};
 
-  public init(): void {
-    if (this.wordProvider) {
-      this.wordProvider.getWord()
-        .then(this.setWord.bind(this))
-        .catch((error) => console.error('Hangman.init: no word provided', error));
-    }
-  }
-
   public setFailsListener(listener: (fails: number, maxFails: number) => void): void {
     this.failsCallback = listener;
   }
 
   public setWordListener(listener: (word: string) => void): void {
     this.wordCallback = listener;
-  }
-
-  public setWordProvider(wordProvider: IWordProvider): void {
-    this.wordProvider = wordProvider;
   }
 
   public setGameOverListener(gameOverListener: (word: string, fails: string[], maxFails: number) => void) {
@@ -48,7 +33,7 @@ export default class Hangman {
     }
   }
 
-  private setWord(word: string): void {
+  public setWord(word: string): void {
     this.fails = 0;
     this.usedLetters = [];
     this.wrongLetters = [];
