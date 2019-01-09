@@ -3,7 +3,7 @@ $background-color: #244;
 $button-hover-color: #366;
 $button-checked-color: #488;
 $outline-color: #9f9;
-$overlay-background-color: rgba(255, 255, 255, .5);
+$overlay-background-color: rgba(255, 255, 255, .4);
 
 html,
 body {
@@ -285,11 +285,15 @@ ul {
 
   &::after {
     content: 'loading...';
-    display: inline;
+    display: inline-block;
+    padding: .4em;
     position: relative;
     top: 50%;
     left: 50%;
+    font-size: 1.3em;
     transform: translate(-50%, -50%);
+    border-radius: .3em;
+    background-color: $button-hover-color;
   }
 }
 
