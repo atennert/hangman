@@ -11,11 +11,11 @@ __master__:<br>
 [![License](https://img.shields.io/github/license/atennert/hangman.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
-* Offline capable web app
-* Start a new run with the start/reset button
+* Offline capable web app (except for getting the words)
+* Menu, which leads to the game or the about page
 * Use the provided on-screen keyboard or a real keyboard
 * Animated hanging stick figure
-* List of a few german nouns (It's temporary. I'm trying to find a service for that. If I can't find one, I'll make the list bigger eventually.)
+* Requests nouns from [Krautipsum](https://krautipsum.de)
 * Landscape and portrait mode
 
 ## Sources
@@ -24,6 +24,8 @@ The code is in the `src` directory. The `src/sw` directory contains the service 
 The build framework uses webpack to generate a single js file for the application and compile the sw.js. The tests are run without webpack. Gulp handles the general tool chain.
 
 Use `npm run build` to trigger the default test and build gulp job. The generated files will end up in a `./public/$npm_version` folder.
+
+The build file also manipulates the service worker file, in which it places the current version from package.json.
 
 ## Prerequisites
 * The npm scripts in package.json are currently focussing on `Linux`. MacOS might work to.

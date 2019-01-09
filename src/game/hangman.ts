@@ -9,6 +9,7 @@ import { About } from '../ui/about';
 import KrautWordEngine from '../word-providing/kraut-word-engine';
 import LoadingOverlay from '../ui/loading-overlay';
 import IWordProvider from '../word-providing/word-provider';
+import timer from './timer';
 
 
 export default class HangmanGame {
@@ -40,9 +41,11 @@ export default class HangmanGame {
       keyboard.setKeyListener(hangman.getLetterCallback());
 
       // if there will be more loading handling, this should be moved into it's own class
-      wordProvider.getWord()
-        .then((word) => hangman.setWord(word))
+      // use timer to show the loading screen at least a few ms to avoid flickering
+      Promise.all([wordProvider.getWord(), timer(500)])
+        .then(([word]) => hangman.setWord(word))
         .catch((error) => console.error('HangmanGame.Game[activation]: no word provided', error))
+        // TODO in error case ... show error screen
         .then(() => loadingOverlay.removeOverlay(gameRoot));
     }, deactivation: () => {
       hangman.setWordListener(() => {});
@@ -71,7 +74,7 @@ export default class HangmanGame {
     new Router(screenConfig).init();
   }
 
-  private clearPage(element: HTMLDivElement) {
+  private clearPage(element: HTMLDivElement): void {
     element.innerHTML = '';
   }
 }
